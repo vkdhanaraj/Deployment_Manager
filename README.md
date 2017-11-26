@@ -9,3 +9,6 @@ Developer should be able to write his own job definitions for deployment and thi
 We will define an interface which developer can use to define their job definition.
 We will expose a public deployment_manager class, developer can instantiate this class and make the deployment. Developer has to pass the list jobs to deployment_manager and trigger the deployment.
 Deployment_manager will take care of the rest.
+
+# System Architecture
+![System Architecture](https://github.com/vkdhanaraj/Deployment_Manager/blob/master/Images/system.png)
