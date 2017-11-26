@@ -5,6 +5,7 @@
 #include<string.h>
 #include <pwd.h>
 #include<unistd.h>
+<<<<<<< HEAD
 #define KNRM  "\x1B[40;0m"
 #define KRED  "\x1B[31;1m"
 #define KGRN  "\x1B[32;1m"
@@ -14,6 +15,8 @@
 #define KCYN  "\x1B[36;1m"
 #define KWHT  "\x1B[37;1m"
 #define RED  "\x1B[41;1m"
+=======
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 
 using namespace std;
 
@@ -22,7 +25,10 @@ class base_job
 	public:
 		virtual bool execute()=0;
 		virtual char const *name()=0;
+<<<<<<< HEAD
 		virtual bool privilege()=0;
+=======
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 };
 
 //Function to convert int value into string value.
@@ -37,7 +43,11 @@ string to_string(int val)
 void execute_pipeline(base_job *a[],int n)
 {
 	int i;
+<<<<<<< HEAD
 	bool result,result_copy[1000],execute_copy[1000]={false};	//To store results of the executed functions.
+=======
+	bool result,result_copy[1000];	//To store results of the executed functions.
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 	char choice,mode,name[30],str[255],help_ch;
 	char const *func_name;		//stores name of the function
 	FILE *fp;
@@ -47,7 +57,10 @@ void execute_pipeline(base_job *a[],int n)
 	char bufname[30],ch,current_file[32];
 	int bufcount;
 	
+<<<<<<< HEAD
 	cout<<KWHT;
+=======
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 	//open file containing buffer count and get the count.
 	buffer_cp=fopen("Buffercount.txt","r");
 	fscanf(buffer_cp,"%d",&bufcount);
@@ -72,7 +85,11 @@ void execute_pipeline(base_job *a[],int n)
 	fclose(bufferp);
 	
 	fstream x,y;
+<<<<<<< HEAD
 	cout<<"\nEnter your current file name(Ex: Sample.cpp)\n";
+=======
+	cout<<"Enter your current file name(Ex: Sample.cpp)\n";
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 	cin>>current_file;
 	x.open(current_file); 		//The file from which the content will be copied
 	y.open(bufname); 		//The file to which the content will be copied
@@ -93,12 +110,17 @@ void execute_pipeline(base_job *a[],int n)
 	
 	strcpy(name,pw->pw_name);
 	strcat(name,"_history.txt");
+<<<<<<< HEAD
 	cout<<"\nDo you want to turn on silent mode(ie., Do you want to execute all tasks without displaying any result in between execution)?("<<KGRN<<"Y"<<KWHT<<"/"<<KRED<<"N"<<KNRM<<KWHT")\n";
+=======
+	cout<<"Do you want to turn on silent mode?(Y/N)";
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 	cin>>mode;
 	
 	fp=fopen(name,"a");
 	fprintf(fp,"\nBuffer %d:\n",bufcount);
 	fclose(fp);
+<<<<<<< HEAD
 	
 	bool access;
 	
@@ -175,6 +197,58 @@ void execute_pipeline(base_job *a[],int n)
 			else if(result_copy[i]==false&&execute_copy[i]==true)
 			{
 				cout<<KRED<<"Fault detected in "<<func_name<<KNRM<<KWHT<<endl;
+=======
+	for(i=0;i<n;i++)
+	{
+				
+		time(&ptr);		
+		func_name=a[i]->name();		//Get the name of function
+		result=a[i]->execute();		//Execute the job
+		//Save the result, date and time in a file
+		fp=fopen(name,"a");
+		if(result==true)
+			fprintf(fp,"%s executed at %s		Result:Successful\n",func_name,ctime(&ptr));
+		else
+			fprintf(fp,"%s executed at %s		Result:Failure\n",func_name,ctime(&ptr));
+		fclose(fp);
+		if(mode=='n'||mode=='N')
+		{		
+			if(result==false)
+			{
+				cout<<"Fault detected.\n";
+				cout<<"Do you need any help?\n";
+				cin>>help_ch;
+				if(help_ch=='y'||help_ch=='Y')
+				{
+					system("google-chrome http://google.com"); //Open google in browser automatically if user needs help
+				}
+				cout<<"Do you still want to continue?(Y/N)\n";
+				cin>>choice;
+				if(choice=='n'||choice=='N')
+				{
+					return;
+				}			
+			}
+			else
+			{
+				cout<<func_name<<" executed successfully\n";
+			}
+		}
+		result_copy[i]=result;
+	}
+	if(mode=='y'||mode=='Y')
+	{
+		for(i=0;i<n;i++)
+		{
+			func_name=a[i]->name();
+			if(result_copy[i]==true)
+			{
+				cout<<func_name<<" executed successfully."<<endl;
+			}
+			else
+			{
+				cout<<"Fault detected in "<<func_name<<endl;
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 			}
 		}
 		cout<<"Do you need any help?\n";
@@ -204,14 +278,22 @@ void execute_pipeline(base_job *a[],int n)
 	int buf_pos;
 	char buf_temp[32];
 	char buf_temp2[32];
+<<<<<<< HEAD
 	cout<<"\nPresent Buffer number = "<<bufcount<<"\nDo you want to rivert back to any of your previous code?("<<KGRN<<"Y"<<KWHT<<"/"<<KRED<<"N"<<KWHT")\n";
+=======
+	cout<<"\nPresent Buffer number = "<<bufcount<<"\nDo you want to rivert back to any of your previous codes?(y/n)\n";
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 	cin>>buf_ch;
 	if(buf_ch=='y'||buf_ch=='Y')
 	{
 		cout<<"Enter the Buffer number\n";
 		cin>>buf_pos;
 		if(buf_pos>bufcount||buf_pos<1)
+<<<<<<< HEAD
 			cout<<KRED<<"\nInvalid Buffer number"<<KNRM<<KWHT<<"\n";
+=======
+			cout<<"\nInvalid Buffer number\n";
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 		else
 		{
 			string buf_temp1="Buffer"+to_string(buf_pos);
@@ -227,8 +309,11 @@ void execute_pipeline(base_job *a[],int n)
 			}
 			x.close();
 			y.close();	
+<<<<<<< HEAD
 			
 			cout<<"Your codes have been riverted\n";
+=======
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 
 			strcpy(buf_temp2,"gedit ");
 			strcat(buf_temp2,current_file);
@@ -236,5 +321,8 @@ void execute_pipeline(base_job *a[],int n)
 		}	
 	} 	
 	cout<<"\nHistory has been saved in the file "<<name<<endl;
+<<<<<<< HEAD
 	cout<<KNRM;
+=======
+>>>>>>> 84cd37ff7593e2e0adc8fd35a97c307f83817016
 }
